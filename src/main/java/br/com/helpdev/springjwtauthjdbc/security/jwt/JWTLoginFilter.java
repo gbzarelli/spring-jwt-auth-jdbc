@@ -1,7 +1,6 @@
 package br.com.helpdev.springjwtauthjdbc.security.jwt;
 
 import br.com.helpdev.springjwtauthjdbc.model.AuthRequestModel;
-import br.com.helpdev.springjwtauthjdbc.service.TokenAuthenticationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +17,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
-    JWTLoginFilter(String url, AuthenticationManager authManager) {
+    public JWTLoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
     }
@@ -44,8 +43,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain,
-            Authentication auth) throws IOException, ServletException {
-        TokenAuthenticationService.addAuthentication(response, auth);
+            Authentication auth)  {
+
+        JWTAuth.addAuthentication(response, auth);
     }
 
 }

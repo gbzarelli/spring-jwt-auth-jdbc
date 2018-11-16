@@ -1,5 +1,7 @@
-package br.com.helpdev.springjwtauthjdbc.security.jwt;
+package br.com.helpdev.springjwtauthjdbc.security;
 
+import br.com.helpdev.springjwtauthjdbc.security.jwt.JWTAuthenticationFilter;
+import br.com.helpdev.springjwtauthjdbc.security.jwt.JWTLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -31,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .roles("ROLE_ADMIN");
 
         //Pegando por banco!
+
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery(
                         "select username,password, enabled from users where username=?")
@@ -44,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/test").permitAll()
 
-                .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")//Não consegui fazer funcionar
+                .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
 
                 .anyRequest().authenticated()
                 .and()
