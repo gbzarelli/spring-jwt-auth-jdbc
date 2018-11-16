@@ -22,7 +22,7 @@ class JWTAuth {
     private static final String SECRET = "MySecret";
     private static final String TOKEN_PREFIX = "Bearer";
     private static final String HEADER_STRING = "Authorization";
-    public static final String CLAIMS_PRIVILEGES = "privileges";
+    private static final String CLAIMS_PRIVILEGES = "privileges";
 
     static void addAuthentication(HttpServletResponse response, Authentication auth) {
         Claims claims = Jwts.claims().setSubject(auth.getName());
