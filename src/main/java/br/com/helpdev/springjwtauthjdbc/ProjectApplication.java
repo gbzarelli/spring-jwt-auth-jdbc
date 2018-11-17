@@ -5,11 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-public class SpringJwtAuthJdbcApplication {
+public class ProjectApplication {
 
     @Bean(name = "dataSource")
     public DriverManagerDataSource dataSource() {
@@ -21,14 +20,26 @@ public class SpringJwtAuthJdbcApplication {
         return driverManagerDataSource;
     }
 
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
+    /**
+     * Define o passwordEncoder da aplicação
+     * Define the passwordEncoder application
+     *
+     * @return BCryptPasswordEncoder
+     */
+    @Bean()
+    public PasswordEncoder passwordEncoder() {
         //https://www.browserling.com/tools/bcrypt
         return new BCryptPasswordEncoder(6);
         //return NoOpPasswordEncoder.getInstance();
     }
 
+    /**
+     * Método main para rodar a aplicação stand-alone
+     * main method to stand-alone run application
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        SpringApplication.run(SpringJwtAuthJdbcApplication.class, args);
+        SpringApplication.run(ProjectApplication.class, args);
     }
 }
