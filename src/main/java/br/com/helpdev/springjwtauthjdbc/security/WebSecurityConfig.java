@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("root")
                 .password(passwordEncoder.encode("xCvSDs$46gG"))
-                .roles("ROLE_ADMIN", "ROLE_USER");
+                .roles("ADMIN", "USER");
 
         //-----
 
