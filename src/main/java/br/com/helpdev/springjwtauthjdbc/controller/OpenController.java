@@ -11,7 +11,7 @@ public class OpenController {
 
     @GetMapping("")
     public ResponseEntity<String> get() {
-        return ResponseEntity.ok("Sem necessidade de autenticação");
+        return ResponseEntity.ok("[OK - 200] GET /open");
     }
 
 

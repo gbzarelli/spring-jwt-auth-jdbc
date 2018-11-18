@@ -10,6 +10,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class ProjectApplication {
 
+    /**
+     * Nesse projeto estamos definindo o DriverManagerSource para a aplicação. Nesse projeto vai ser responsável
+     * em configurar nosso banco para autenticação.
+     * <p>
+     * In this project we are defining the DriverManagerSource for the application. In this project
+     * you will be responsible for setting up our bank for authentication.
+     *
+     * @return DriverManagerDataSource
+     */
     @Bean(name = "dataSource")
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
@@ -22,6 +31,7 @@ public class ProjectApplication {
 
     /**
      * Define o passwordEncoder da aplicação
+     * <p>
      * Define the passwordEncoder application
      *
      * @return BCryptPasswordEncoder
@@ -35,6 +45,7 @@ public class ProjectApplication {
 
     /**
      * Método main para rodar a aplicação stand-alone
+     * <p>
      * main method to stand-alone run application
      *
      * @param args

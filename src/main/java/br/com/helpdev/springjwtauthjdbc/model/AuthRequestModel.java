@@ -1,6 +1,12 @@
 package br.com.helpdev.springjwtauthjdbc.model;
 
+/**
+ * Classe para mapeamento de entrada do login
+ * <p>
+ * Class mapping input login
+ */
 public class AuthRequestModel {
+
     private String username;
     private String password;
 

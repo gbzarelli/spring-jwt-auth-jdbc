@@ -11,7 +11,22 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * Classe que filtra as requisições para garantir que elas estejam autenticadas.
+ * <p>
+ * Class that filters the requests to ensure they are authenticated.
+ */
 public class JWTAuthenticationFilter extends GenericFilterBean {
+
+    /**
+     * Verifica se há autenticação no request.
+     *
+     * @param request     ServletRequest
+     * @param response    ServletResponse
+     * @param filterChain FilterChain
+     * @throws IOException      IOException
+     * @throws ServletException ServletException
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         Authentication authentication = JWTAuth

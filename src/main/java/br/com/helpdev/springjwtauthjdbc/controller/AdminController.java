@@ -11,7 +11,7 @@ public class AdminController {
 
     @GetMapping("")
     public ResponseEntity<String> get() {
-        return ResponseEntity.ok("[OK] - Somente Admin");
+        return ResponseEntity.ok("[OK - 200] GET /admin");
     }
 
 

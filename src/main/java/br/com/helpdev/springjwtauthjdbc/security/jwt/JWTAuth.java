@@ -16,14 +16,25 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+/**
+ * Classe responsável em gerar e extrair do Servlet o token
+ * <p>
+ * Class responsible for generating and extracting from the Servlet the token
+ */
 class JWTAuth {
     // EXPIRATION_TIME = 1 dias
     private static final long EXPIRATION_TIME = TimeUnit.DAYS.toMillis(1);
-    private static final String SECRET = "MySecret";
+    private static final String SECRET = "MySeCrEt";
     private static final String TOKEN_PREFIX = "Bearer";
     private static final String HEADER_STRING = "Authorization";
     private static final String CLAIMS_PRIVILEGES = "privileges";
 
+    /**
+     * Método que adiciona uma nova autenticação, gerando o token e adicionando no header do HttpServletResponse
+     *
+     * @param response HttpServletResponse
+     * @param auth     Authentication
+     */
     static void addAuthentication(HttpServletResponse response, Authentication auth) {
         Claims claims = Jwts.claims().setSubject(auth.getName());
         claims.put(CLAIMS_PRIVILEGES, auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
@@ -37,6 +48,12 @@ class JWTAuth {
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
     }
 
+    /**
+     * Método que extrai o token do Header e converte para o objeto Authentication;
+     *
+     * @param request HttpServletRequest
+     * @return Authentication
+     */
     static Authentication getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
 
@@ -47,10 +64,12 @@ class JWTAuth {
                     .getBody();
             String user = body.getSubject();
 
-            List<String> privileges = (List<String>) body.get(CLAIMS_PRIVILEGES);
             List<GrantedAuthority> objects = new ArrayList<>();
-            for (String privilege:privileges) {
-                objects.add(() -> privilege);
+            if (body.containsKey(CLAIMS_PRIVILEGES)) {
+                List<String> privileges = (List<String>) body.get(CLAIMS_PRIVILEGES);
+                for (String privilege : privileges) {
+                    objects.add(() -> privilege);
+                }
             }
             if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, objects);
