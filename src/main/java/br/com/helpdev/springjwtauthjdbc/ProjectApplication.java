@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class ProjectApplication {
+    public static final int BCRYPT_STRENGTH = 6;
 
     /**
      * Nesse projeto estamos definindo o DriverManagerSource para a aplicação. Nesse projeto vai ser responsável
@@ -39,7 +40,7 @@ public class ProjectApplication {
     @Bean()
     public PasswordEncoder passwordEncoder() {
         //https://www.browserling.com/tools/bcrypt
-        return new BCryptPasswordEncoder(6);
+        return new BCryptPasswordEncoder(BCRYPT_STRENGTH);
         //return NoOpPasswordEncoder.getInstance();
     }
 

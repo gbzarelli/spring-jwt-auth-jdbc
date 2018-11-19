@@ -51,7 +51,7 @@ public class ProjectApplicationTests {
     public void realizaLoginComSucesso() throws Exception {
         mvc.perform(post("/login")
                 .contentType(APPLICATION_JSON).content(
-                        "{\"username\":\"admin\",\"password\":\"helpdev\"}"))
+                        "{\"username\":\"admin\",\"password\":\"admin\"}"))
                 .andExpect(status().isOk());
     }
 
