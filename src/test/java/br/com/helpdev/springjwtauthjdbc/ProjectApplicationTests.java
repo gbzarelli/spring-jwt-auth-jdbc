@@ -19,6 +19,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.http.MediaType.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -33,30 +37,30 @@ public class ProjectApplicationTests {
 
     @Test
     public void pathSemSegurancaRetornoOK() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/open"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        mvc.perform(get("/open"))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void pathComSegurancaRetornoFalha() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/test"))
-                .andExpect(MockMvcResultMatchers.status().isForbidden());
+        mvc.perform(get("/test"))
+                .andExpect(status().isForbidden());
     }
 
     @Test
     public void realizaLoginComSucesso() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/login")
-                .contentType(MediaType.APPLICATION_JSON).content(
+        mvc.perform(post("/login")
+                .contentType(APPLICATION_JSON).content(
                         "{\"username\":\"admin\",\"password\":\"helpdev\"}"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(status().isOk());
     }
 
     @Test
     public void realizaLoginComSenhaErradaRetornoSemAutorizacao() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/login")
-                .contentType(MediaType.APPLICATION_JSON).content(
+        mvc.perform(post("/login")
+                .contentType(APPLICATION_JSON).content(
                         "{\"username\":\"admin\",\"password\":\"xxxx\"}"))
-                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+                .andExpect(status().isUnauthorized());
     }
 
 

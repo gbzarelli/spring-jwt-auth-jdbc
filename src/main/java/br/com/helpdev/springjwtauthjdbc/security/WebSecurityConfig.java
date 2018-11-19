@@ -26,11 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
 
     /**
-     *  AutoWired contructor
-     *
-     *  Os parametros construidos automaticamentes, a definição do DataSource e do PasswordEncoder foi definida no
-     *  Application do sistema com a anotação @Bean
-     *
+     * AutoWired contructor
+     * <p>
+     * Os parametros construidos automaticamentes, a definição do DataSource e do PasswordEncoder foi definida no
+     * Application do sistema com a anotação @Bean
+     * <p>
      * The parameters built automatically, the DataSource and PasswordEncoder definition were defined in the
      * System Application with the @Bean annotation
      *
@@ -91,6 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Define que tudo que tiver em '/admin' só podera ser acessado por usuario que tiver pemissao ADMIN
                 //Sets that everything in '/admin' can only be accessed by user who has ADMIN
                 .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
+                //.antMatchers("/admin").hasRole("ADMIN")//Automatic using prefix *ROLE*
 
                 //Define que o restante deve ser autenticado
                 //Sets that rest to be authenticated

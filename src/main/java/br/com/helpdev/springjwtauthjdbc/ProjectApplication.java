@@ -19,7 +19,7 @@ public class ProjectApplication {
      *
      * @return DriverManagerDataSource
      */
-    @Bean(name = "dataSource")
+    @Bean("dataSource")
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -36,7 +36,7 @@ public class ProjectApplication {
      *
      * @return BCryptPasswordEncoder
      */
-    @Bean()
+    @Bean("passwordEncoder")
     public PasswordEncoder passwordEncoder() {
         //https://www.browserling.com/tools/bcrypt
         return new BCryptPasswordEncoder(6);
@@ -48,7 +48,7 @@ public class ProjectApplication {
      * <p>
      * main method to stand-alone run application
      *
-     * @param args
+     * @param args String[] args
      */
     public static void main(String[] args) {
         SpringApplication.run(ProjectApplication.class, args);
