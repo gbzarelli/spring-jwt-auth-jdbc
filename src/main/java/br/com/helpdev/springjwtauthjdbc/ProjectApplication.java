@@ -36,7 +36,7 @@ public class ProjectApplication {
      *
      * @return BCryptPasswordEncoder
      */
-    @Bean("passwordEncoder")
+    @Bean()
     public PasswordEncoder passwordEncoder() {
         //https://www.browserling.com/tools/bcrypt
         return new BCryptPasswordEncoder(6);
