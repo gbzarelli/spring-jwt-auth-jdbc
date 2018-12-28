@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 class JWTAuth {
     // EXPIRATION_TIME = 1 dias
     private static final long EXPIRATION_TIME = TimeUnit.DAYS.toMillis(1);
-    private static final String SECRET = "MySeCrEt";
+    private static final String SECRET = "b%c{^BTEj[qO";
     private static final String TOKEN_PREFIX = "Bearer";
     private static final String HEADER_STRING = "Authorization";
     private static final String CLAIMS_PRIVILEGES = "privileges";
@@ -36,11 +36,17 @@ class JWTAuth {
      * @param auth     Authentication
      */
     static void addAuthentication(HttpServletResponse response, Authentication auth) {
-        Claims claims = Jwts.claims().setSubject(auth.getName());
-        claims.put(CLAIMS_PRIVILEGES, auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
-        String JWT = Jwts.builder()
+        Date expiration = new Date(System.currentTimeMillis() + EXPIRATION_TIME);
+
+        Claims claims = Jwts.claims()
+                .setIssuedAt(new Date())
                 .setSubject(auth.getName())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(expiration)
+                .setSubject(auth.getName());
+
+        claims.put(CLAIMS_PRIVILEGES, auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+
+        String JWT = Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .setClaims(claims)
                 .compact();
@@ -58,15 +64,17 @@ class JWTAuth {
         String token = request.getHeader(HEADER_STRING);
 
         if (token != null) {
-            Claims body = Jwts.parser()
+
+            Claims claims = Jwts.parser()
                     .setSigningKey(SECRET)
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .getBody();
-            String user = body.getSubject();
+
+            String user = claims.getSubject();
 
             List<GrantedAuthority> objects = new ArrayList<>();
-            if (body.containsKey(CLAIMS_PRIVILEGES)) {
-                List<String> privileges = (List<String>) body.get(CLAIMS_PRIVILEGES);
+            if (claims.containsKey(CLAIMS_PRIVILEGES)) {
+                List<String> privileges = (List<String>) claims.get(CLAIMS_PRIVILEGES);
                 for (String privilege : privileges) {
                     objects.add(() -> privilege);
                 }
